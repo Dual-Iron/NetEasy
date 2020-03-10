@@ -1,0 +1,11 @@
+[i:75] For developers who hate vanilla networking like me [i:75]
+
+[c/ff0000:--------------] 
+Provides a simple, object-oriented interface for sending data over the network. Information is sent via packets called Modules.
+
+This is a dependency for other mods, not standalone. It's a small download, though, so don't worry about it. :)
+
+See the homepage for more info, a usage guide, and help.
+[c/ff0000:--------------] 
+
+Enjoy! [i:29]
