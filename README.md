@@ -1,3 +1,2 @@
 # NetEasy
-A dependency mod for easy networking
-h
+A dependency mod for easy networking on tModLoader
