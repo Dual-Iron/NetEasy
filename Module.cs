@@ -78,7 +78,7 @@ namespace NetEasy
 
             IEnumerable<Type> Types()
             {
-                foreach (var type in mod.Code.GetExportedTypes().Where(t => t.IsSubclassOf(typeof(Module))))
+                foreach (var type in mod.Code.GetExportedTypes().Where(t => t.IsSubclassOf(typeof(Module)) && !t.IsAbstract))
                 {
                     if (!type.IsSerializable)
                     {
