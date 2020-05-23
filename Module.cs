@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,8 +13,8 @@ namespace NetEasy
 {
     /// <summary>
     /// Provides methods to send, write, and receive <see cref="ModPacket"/> objects in a modular fashion. <para/>
-    /// All types deriving from this class, and all members inside them, must have the <see cref="SerializableAttribute"/>.
-    /// Use the <see cref="NonSerializedAttribute"/> on fields to ignore them.
+    /// All types deriving from this class must have the <see cref="SerializableAttribute"/>.
+    /// Use the <see cref="NonSerializedAttribute"/> on fields to not serialize them.
     /// </summary>
     /// <exception cref="ModuleLoadException">Thrown when a module or its observed members do not have the <see cref="SerializableAttribute"/>.</exception>
     [Serializable]
@@ -83,10 +84,6 @@ namespace NetEasy
                     if (!type.IsSerializable)
                     {
                         throw new ModuleLoadException($"All Modules must have the SerializableAttribute. Add the SerializableAttribute to the type.", type);
-                    }
-                    if (type.GetConstructor(Type.EmptyTypes) == null)
-                    {
-                        throw new ModuleLoadException($"All Modules must have a public parameterless constructor.", type);
                     }
                     foreach (var field in type.GetFields())
                     {

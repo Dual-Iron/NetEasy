@@ -9,8 +9,8 @@ namespace NetEasy
 	/// <summary>Use the static methods in this class to communicate with NetEasy.</summary>
 	public sealed class NetEasy : Mod
 	{
-		/// <summary>Loads your <see cref="Mod"/> for NetEasy. Call this in <see cref="Mod.Load"/>.</summary>
-		public static void Load(Mod mod)
+		/// <summary>Loads your <see cref="Mod"/> for NetEasy. Call this in <see cref="Mod.PostSetupContent"/>.</summary>
+		public static void Register(Mod mod)
 		{
 			try
 			{
@@ -19,7 +19,7 @@ namespace NetEasy
 			catch (ModuleLoadException) { throw; }
 			catch (Exception e)
 			{
-				throw new ModuleLoadException("There was an error loading a Module. " + e.Message, e);
+				throw new ModuleLoadException("There was an error registering a Module. " + e.Message, e);
 			}
 		}
 
