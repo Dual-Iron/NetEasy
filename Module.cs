@@ -29,28 +29,27 @@ namespace NetEasy
 #pragma warning restore IDE1006 // Naming Styles
 
         /// <summary>The sender of the net message.</summary>
-        [field: NonSerialized]
-        protected Node Sender { get; private set; } = new Node(Main.myPlayer);
+        protected int Sender { get; private set; } = Main.myPlayer;
 
         /// <summary>Initializes a new instance of the <see cref="Module"/> class.</summary>
         protected Module() { }
 
         /// <summary>
-        /// Sends this module as a <see cref="ModPacket"/>. 
+        /// Sends this module as a <see cref="ModPacket"/>.
         /// Does not send fields marked with <see cref="NonSerializedAttribute"/>.
         /// </summary>
-        /// <param name="ignore">If not null, the packet will <b>not</b> be sent to the specified node.</param>
-        /// <param name="recipient">If not null, the packet will <b>only</b> be sent to the specified node.</param>
+        /// <param name="toClient">If not null, the packet will <b>only</b> be sent to the specified node.</param>
+        /// <param name="ignoreClient">If not null, the packet will <b>not</b> be sent to the specified node.</param>
         /// <param name="runLocally">If true, the <see cref="Receive()"/> method will also be called for the sender.</param>
-        public void Send(Node? ignore = null, Node? recipient = null, bool runLocally = true)
+        public void Send(int toClient = -1, int ignoreClient = -1, bool runLocally = true)
         {
-            if (PreSend(ignore, recipient))
+            if (PreSend(toClient, ignoreClient))
             {
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {
                     ModPacket mp = mod.GetPacket();
                     serializer.Serialize(mp.BaseStream, this);
-                    mp.Send(recipient?.WhoAmI ?? -1, ignore?.WhoAmI ?? -1);
+                    mp.Send(toClient, ignoreClient);
                 }
                 if (runLocally)
                 {
@@ -63,12 +62,12 @@ namespace NetEasy
         protected internal abstract void Receive();
 
         /// <summary>Called before sending the module. Return <see langword="false"/> to cancel the send and prevent <see cref="Receive()"/> from being called. Defaults to <see langword="true"/>.</summary>
-        protected virtual bool PreSend(Node? ignoreClient, Node? toClient) => true;
+        protected virtual bool PreSend(int toClient = -1, int ignoreClient = -1) => true;
 
         internal static void Receive(Stream stream, int whoAmI)
         {
             Module module = (Module)serializer.Deserialize(stream);
-            module.Sender = new Node(whoAmI);
+            module.Sender = whoAmI;
             module.Receive();
         }
 

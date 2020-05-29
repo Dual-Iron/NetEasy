@@ -1,5 +1,5 @@
 displayName = NetEasy - ModPacket Management
 author = Dual
-version = 0.1.5
+version = 0.1.6
 dllReferences = NetSerializer
 homepage = https://forums.terraria.org/index.php?threads/neteasy-for-mod-devs-who-despise-networking-with-a-passion.86170/
